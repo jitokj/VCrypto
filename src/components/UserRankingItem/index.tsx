@@ -1,40 +1,37 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-export type MarketCoinProps = {
-  marketCoin: {
+export type UserRankingItemProps = {
+  user: {
     image: string;
     name: string;
-    symbol: string;
-    valueChange24h: number;
-    valueUSD: number;
+    netWorth: number;
   };
+  place: number;
 };
 
-const MarketCoin = (props: MarketCoinProps) => {
+const UserRankingItem = (props: UserRankingItemProps) => {
   const {
-    marketCoin: { image, name, symbol, valueChange24h, valueUSD },
+    user: { image, name, netWorth },
+    place,
   } = props;
   return (
     <View style={styles.root}>
       <View style={styles.left}>
+        <Text style={styles.place}>{place}</Text>
         <Image style={styles.image} source={{ uri: image }} />
         <View>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.symbol}>{symbol}</Text>
         </View>
       </View>
       <View style={styles.right}>
-        <Text style={styles.value}>${valueUSD}</Text>
-        <Text style={{ color: valueChange24h > 0 ? "#398f0a" : "#f10000" }}>
-          {valueChange24h > 0 && "+"} {valueChange24h}
-        </Text>
+        <Text style={styles.value}>${netWorth}</Text>
       </View>
     </View>
   );
 };
 
-export default MarketCoin;
+export default UserRankingItem;
 
 const styles = StyleSheet.create({
   root: {
@@ -69,5 +66,9 @@ const styles = StyleSheet.create({
   },
   symbol: {
     color: "#6b6b6b",
+  },
+  place: {
+    fontSize: 18,
+    width: 20,
   },
 });
