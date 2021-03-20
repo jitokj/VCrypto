@@ -1,5 +1,7 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import PercentageChange from "../PercentageChange";
+import { useNavigation } from "@react-navigation/native";
 
 export type MarketCoinProps = {
   marketCoin: {
@@ -15,8 +17,14 @@ const MarketCoin = (props: MarketCoinProps) => {
   const {
     marketCoin: { image, name, symbol, valueChange24h, valueUSD },
   } = props;
+  const navigation = useNavigation();
   return (
-    <View style={styles.root}>
+    <Pressable
+      style={styles.root}
+      onPress={() => {
+        navigation.navigate("CoinDetails");
+      }}
+    >
       <View style={styles.left}>
         <Image style={styles.image} source={{ uri: image }} />
         <View>
@@ -26,11 +34,9 @@ const MarketCoin = (props: MarketCoinProps) => {
       </View>
       <View style={styles.right}>
         <Text style={styles.value}>${valueUSD}</Text>
-        <Text style={{ color: valueChange24h > 0 ? "#398f0a" : "#f10000" }}>
-          {valueChange24h > 0 && "+"} {valueChange24h}
-        </Text>
+        <PercentageChange value={valueChange24h} />
       </View>
-    </View>
+    </Pressable>
   );
 };
 

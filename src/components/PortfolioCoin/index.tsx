@@ -1,5 +1,6 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export type PortfolioCoinProps = {
   portfolioCoin: {
@@ -15,8 +16,14 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
   const {
     portfolioCoin: { image, name, symbol, amount, valueUSD },
   } = props;
+  const navigation = useNavigation();
   return (
-    <View style={styles.root}>
+    <Pressable
+      style={styles.root}
+      onPress={() => {
+        navigation.navigate("CoinDetails");
+      }}
+    >
       <View style={styles.left}>
         <Image style={styles.image} source={{ uri: image }} />
         <View>
@@ -30,7 +37,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
           {symbol} {amount}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
