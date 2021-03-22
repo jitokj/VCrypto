@@ -3,6 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import PercentageChange from "../../components/PercentageChange";
 import CoinPriceGraph from "../../components/CoinPriceGraph";
+import { useNavigation } from "@react-navigation/core";
 
 const historyString = JSON.stringify([
   47222.9831719397,
@@ -176,6 +177,7 @@ const historyString = JSON.stringify([
 ]);
 
 const CoinDetailScreen = () => {
+  const navigation = useNavigation();
   const [coinData, setCoinData] = useState({
     id: "1",
     image:
@@ -189,9 +191,11 @@ const CoinDetailScreen = () => {
     amount: 2,
   });
   const onBuy = () => {
-    console.log("Buy");
+    navigation.navigate("CoinExchange", { isBuy: true, coinData });
   };
-  const onSell = () => {};
+  const onSell = () => {
+    navigation.navigate("CoinExchange", { isBuy: false, coinData });
+  };
   return (
     <View style={styles.root}>
       <View style={styles.topContainer}>
